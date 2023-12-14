@@ -10,6 +10,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import java.awt.GridLayout;
+import javax.swing.Icon;
+import java.awt.Color;
+
+
 
 public class GameGUI extends JFrame {
 
@@ -19,6 +24,15 @@ public class GameGUI extends JFrame {
 	ImageIcon backgroundImg;
 	private JLabel lblNewLabel;
 	private JPanel panel;
+
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_3;
+	private JLabel lblNewLabel_4;
+	private JLabel lblNewLabel_5;
+	private JLabel lblNewLabel_6;
+	private JLabel lblNewLabel_7;
+
 
 	/**
 	 * Create the frame.
@@ -46,7 +60,16 @@ public class GameGUI extends JFrame {
 	            }
 		};
 		contentPane.add(gamePane);
-		StrawberryTile StrawberryTile = new StrawberryTile();
+
+		StrawberryTile strawberry= new StrawberryTile();
+		KiwiTile kiwi=new KiwiTile();
+		GrapeTile grape =new GrapeTile();
+		OrangeTile orange = new OrangeTile();
+		AppleTile apple = new AppleTile();
+		BasketTile basket= new BasketTile();
+		WatermelonTile watermelon = new WatermelonTile();
+		
+
 //	      JLabel strlabel = new JLabel(StrawberryTile.getImageIcon());
 //	       gamePane.add(strlabel);
 		gamePane.setLayout(null);
@@ -54,10 +77,49 @@ public class GameGUI extends JFrame {
 		panel = new JPanel();
 		panel.setBounds(6, 156, 306, 282);
 		gamePane.add(panel);
+
+		panel.setLayout(new GridLayout(3, 3, 1, 1));
 		
-		lblNewLabel = new JLabel(StrawberryTile.getImageIcon());
-		panel.add(lblNewLabel);
+//		lblNewLabel_3 = new JLabel((Icon) null);
+//		panel.add(lblNewLabel_3);
+//		
+//		lblNewLabel_2 = new JLabel((Icon) null);
+//		panel.add(lblNewLabel_2);
+//		
+//		lblNewLabel_1 = new JLabel((Icon) null);
+//		panel.add(lblNewLabel_1);
+//		
+//		lblNewLabel_6 = new JLabel((Icon) null);
+//		lblNewLabel_6.setBackground(new Color(255, 255, 255));
+//		panel.add(lblNewLabel_6);
+//		
+//		lblNewLabel_7 = new JLabel((Icon) null);
+//		panel.add(lblNewLabel_7);
+//		
+//		lblNewLabel_5 = new JLabel((Icon) null);
+//		panel.add(lblNewLabel_5);
+//		
+//		lblNewLabel_4 = new JLabel((Icon) null);
+//		panel.add(lblNewLabel_4);
+		
+		lblNewLabel = new JLabel(strawberry.getScaledImage());
+		lblNewLabel_1 = new JLabel(watermelon.getScaledImage());
+		lblNewLabel_2 = new JLabel(basket.getScaledImage());
+		lblNewLabel_3 = new JLabel(grape.getScaledImage());
+		lblNewLabel_4 = new JLabel(orange.getScaledImage());
+		lblNewLabel_5 = new JLabel(apple.getScaledImage());
+		lblNewLabel_6 = new JLabel(kiwi.getScaledImage());
+		lblNewLabel_7 = new JLabel(kiwi.getScaledImage());
 	
+		panel.add(lblNewLabel);
+		panel.add(lblNewLabel_1);
+		panel.add(lblNewLabel_2);
+		panel.add(lblNewLabel_3);
+		panel.add(lblNewLabel_4);
+		panel.add(lblNewLabel_5);
+		panel.add(lblNewLabel_6);
+		panel.add(lblNewLabel_7);
+
 		
 	}
 }
