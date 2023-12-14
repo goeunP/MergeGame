@@ -55,12 +55,14 @@ public class MainGUI extends JFrame {
 		setBounds(100, 100, 328, 501);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		setResizable(false);
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		backgroundImg= new ImageIcon(Toolkit.getDefaultToolkit().getImage(MainGUI.class.getResource("/image/background.jpeg")));
 		startPane = new JPanel() {
-			 public void paintComponent(Graphics g) {
+			 private static final long serialVersionUID = 1L;
+
+			public void paintComponent(Graphics g) {
 	             
 	                Dimension d = getSize();
 	                g.drawImage(backgroundImg.getImage(), 0, 0, d.width, d.height, null);
@@ -100,15 +102,13 @@ public class MainGUI extends JFrame {
 		Dimension rankingBtnSize = new Dimension(150, 50);
 		
 		startBtn = new JButton("Game Start");
-		startBtn.setFont(new Font("October Tamil", Font.BOLD, 20));
+		startBtn.setFont(new Font(".AppleSystemUIFont", Font.BOLD, 20));
 		startBtn.setPreferredSize(startBtnSize);
 		
 		startBtn.addActionListener(new ActionListener() {
 			 @Override
 			    public void actionPerformed(ActionEvent e) {
 //			        new RegisterGUI();
-			        
-			       
 			        RegisterGUI frame2 = new RegisterGUI();
 			        setVisible(false); // 창 안보이게 하기 
 					frame2.setVisible(true);
@@ -121,13 +121,22 @@ public class MainGUI extends JFrame {
 		startPane.add(startBtn, gbc_startBtn);
 		
 		rankingBtn = new JButton("Ranking");
-		rankingBtn.setFont(new Font("October Condensed Tamil", Font.BOLD, 20));
+		rankingBtn.setFont(new Font(".AppleSystemUIFont", Font.BOLD, 20));
 		rankingBtn.setPreferredSize(rankingBtnSize);
+		rankingBtn.addActionListener(new ActionListener() {
+			 @Override
+			    public void actionPerformed(ActionEvent e) {
+			        RankGUI frame4 = new RankGUI();
+			        setVisible(false); // 창 안보이게 하기 
+					frame4.setVisible(true);
+			    }
+		});
 		GridBagConstraints gbc_rankingBtn = new GridBagConstraints();
 		gbc_rankingBtn.insets = new Insets(0, 0, 0, 5);
 		gbc_rankingBtn.gridx = 1;
 		gbc_rankingBtn.gridy = 5;
 		startPane.add(rankingBtn, gbc_rankingBtn);
+
 	}
 
 }
