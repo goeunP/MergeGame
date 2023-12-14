@@ -99,7 +99,8 @@ public class RegisterGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     checkInput();
-                    GameGUI frame3 = new GameGUI();
+                    Start frame3 = new Start();
+//                    frame3.start();
                     setVisible(false); // 창 안보이게 하기
                     frame3.setVisible(true);
                 } catch (IllegalArgumentException ex) {
