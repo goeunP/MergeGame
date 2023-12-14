@@ -140,10 +140,10 @@ public class RegisterGUI extends JFrame {
 	        if (nameInput.isEmpty() || dateInput.isEmpty()) {
 	            throw new IllegalArgumentException("Name and Date cannot be empty.");
 	        }
-	        try {Date date = dateFormat.parse(dateInput);} catch(ParseException e) {
-	        	throw new IllegalArgumentException("Invalid date format. Please enter the date in YYYY.MM.DD format.");
-		        
-	        }
+//	        try {Date date = dateFormat.parse(dateInput);} catch(ParseException e) {
+//	        	throw new IllegalArgumentException("Invalid date format. Please enter the date in YYYY.MM.DD format.");
+//		        
+//	        }
 	    
 	        	 
 	        

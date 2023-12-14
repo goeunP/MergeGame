@@ -18,7 +18,7 @@ public class Game extends JPanel implements KeyListener, Runnable {
 	private Thread game;
 	private boolean running;
 	private BufferedImage Image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-	private GameBoard board;
+	private GameGUI board;
 	
 	private long StartTime;
 	private long elapsed;
@@ -31,7 +31,7 @@ public class Game extends JPanel implements KeyListener, Runnable {
 		//this will determine how big the frame is
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		addKeyListener(this);
-		board = new GameBoard(WIDTH/2 - GameBoard.BOARD_WIDTH/2, HEIGHT - GameBoard.BOARD_HEIGHT - 10);
+		board = new GameGUI(WIDTH/2 - GameGUI.BOARD_WIDTH/2, HEIGHT - GameGUI.BOARD_HEIGHT - 10);
 		
 	}
 	
