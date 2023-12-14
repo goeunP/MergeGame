@@ -9,13 +9,17 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JTextField;
+import java.util.Date;
 
 public class RegisterGUI extends JFrame {
 
@@ -35,7 +39,7 @@ public class RegisterGUI extends JFrame {
 
 
 	/**
-	 * Create the frame.
+	 * exception 처리 !!!!!!!!!!!!!!!!
 	 */
 	public RegisterGUI() {
 		setTitle("Register");
@@ -89,14 +93,22 @@ public class RegisterGUI extends JFrame {
 		registerBtn.setFont(new Font(".AppleSystemUIFont", Font.BOLD, 20));
 		registerBtn.setBounds(74, 333, 176, 60);
 		registerPane.add(registerBtn);
+		
 		registerBtn.addActionListener(new ActionListener() {
-			 @Override
-			    public void actionPerformed(ActionEvent e) {
-			        GameGUI frame3 = new GameGUI();
-			        setVisible(false); // 창 안보이게 하기 
-					frame3.setVisible(true);
-			    }
-		});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    checkInput();
+                    Game frame3 = new Game();
+                    setVisible(false); // 창 안보이게 하기
+                    frame3.setVisible(true);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(RegisterGUI.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+		
+
 		
 		datePane = new JPanel();
 		datePane.setBackground(Color.WHITE);
@@ -118,6 +130,24 @@ public class RegisterGUI extends JFrame {
 		dateField.setColumns(10);
 		dateField.setBounds(122, 242, 165, 51);
 		registerPane.add(dateField);
-		
 	}
+	
+	 private void checkInput() {
+	        String nameInput = nameField.getText().trim();
+	        String dateInput = dateField.getText().trim();
+	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+	        
+	        if (nameInput.isEmpty() || dateInput.isEmpty()) {
+	            throw new IllegalArgumentException("Name and Date cannot be empty.");
+	        }
+	        try {Date date = dateFormat.parse(dateInput);} catch(ParseException e) {
+	        	throw new IllegalArgumentException("Invalid date format. Please enter the date in YYYY.MM.DD format.");
+		        
+	        }
+	    
+	        	 
+	        
+
+	        // Add more validation logic as needed
+	    }
 }
