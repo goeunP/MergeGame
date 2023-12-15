@@ -28,6 +28,7 @@ public class GameGUI {
 	private int score = 0;
 	private int highScore= 0;
 	private Font scoreFont;
+	private Font Font;
 	
 	private static int SPACING = 5;
 	public static int BOARD_WIDTH = (COLS+1) * SPACING + COLS * Tile.WIDTH;
@@ -58,7 +59,8 @@ public class GameGUI {
 			
 		}
 		ImageIcon backgroundImg= new ImageIcon(Toolkit.getDefaultToolkit().getImage(MainGUI.class.getResource("/image/background.jpeg")));
-		scoreFont = Game.main.deriveFont(24f);
+		scoreFont = Game.main.deriveFont(42f);
+		Font = Game.main.deriveFont(36f);
 		this.x=x;
 		this.y=y;
 		board = new Tile[ROWS][COLS];
@@ -167,8 +169,8 @@ public class GameGUI {
 			
 			if(current == null) {
 //				int value = random.nextInt(10) < 9 ? 2 : 4;
-				int[] valueSet = {2, 4, 8, 16, 32, 64, 128};
-			    int randomIndex = new Random().nextInt(7);
+				int[] valueSet = {2, 4};
+			    int randomIndex = new Random().nextInt(2);
 			    int value = valueSet[randomIndex];
 //				if(value==4) {
 //					tile=new AppleTile(getTileX(col), getTileY(row));
@@ -190,23 +192,23 @@ public class GameGUI {
 		            case 4:
 		                tile = new AppleTile(getTileX(col), getTileY(row));
 		                break;
-		            case 8:
-		                tile = new KiwiTile(getTileX(col), getTileY(row));
-		                break;
-		            case 16:
-		                tile = new OrangeTile(getTileX(col), getTileY(row));
-		                break;
-		            case 32:
-		                tile = new GrapeTile(getTileX(col), getTileY(row));
-		                break;
-		            case 64:
-		                tile = new WatermelonTile(getTileX(col), getTileY(row));
-		                break;
-		            case 128:
-		                tile = new BasketTile(getTileX(col), getTileY(row));
-		                break;
+//		            case 8:
+//		                tile = new KiwiTile(getTileX(col), getTileY(row));
+//		                break;
+//		            case 16:
+//		                tile = new OrangeTile(getTileX(col), getTileY(row));
+//		                break;
+//		            case 32:
+//		                tile = new GrapeTile(getTileX(col), getTileY(row));
+//		                break;
+//		            case 64:
+//		                tile = new WatermelonTile(getTileX(col), getTileY(row));
+//		                break;
+//		            case 128:
+//		                tile = new BasketTile(getTileX(col), getTileY(row));
+//		                break;
 		            default:
-		                tile = new BasketTile(getTileX(col), getTileY(row));
+		                tile = new StrawberryTile(getTileX(col), getTileY(row));
 		                break;
 		        }
 			
@@ -234,6 +236,15 @@ public class GameGUI {
 		}
 		g.drawImage(finalBoard, 10, 200, null);
 		g2d.dispose();
+		
+		g.setColor(Color.WHITE);
+		g.setFont(scoreFont);
+		g.drawString(""+ score, 230, 50);
+		
+		g.setColor(Color.WHITE);
+		g.setFont(Font);	
+		g.drawString("score", 100, 50);
+		
 		
 		
 		//System.out.println("");
@@ -377,7 +388,8 @@ public class GameGUI {
 			}
 			else if (board[newRow][newCol].getValue()==current.getValue() && board[newRow][newCol].CanCombine()) {
 				board[newRow][newCol].setCanCombine(false);
-				board[newRow][newCol].setValue(board[newRow][newCol].getValue()*2);
+				board[newRow][newCol].setValue(board[newRow][newCol].getValue()*2, newRow, newCol);
+				//System.out.println(board[newRow][newCol].getValue());
 				canMove = true;
 				board[newRow - verticalDirection][newCol - horizontalDirection] = null;
 				board[newRow][newCol].setSlideTo(new Point(newRow, newCol));

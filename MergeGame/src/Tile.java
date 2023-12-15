@@ -145,10 +145,43 @@ public abstract class Tile extends JFrame implements TileInterface{
 	public int getValue() {
 		return value;
 	}
-	public void setValue (int value) {
-		this.value=value;
-		drawImage();
-	}
+	
+
+
+	public void setValue (int value, int x, int y) {
+		//this.imageIcon=null;
+		Tile tile=new StrawberryTile(x, y);
+		if (value == 4) {
+			 tile = new AppleTile(x, y);
+	    } else if(value==8){
+	    	 tile = new KiwiTile(x, y);
+	    }
+	    else if(value==16){
+	    	 tile = new OrangeTile(x, y);
+	    }
+	    else if(value==32){
+	    	 tile = new GrapeTile(x, y);
+	    }
+	    else if(value==64){
+	    	 tile = new WatermelonTile(x, y);
+	    }else if(value==128){
+	    	 tile = new BasketTile(x, y);
+	    }
+		System.out.println(tile.getScaledImage());
+		this.imageIcon = tile.getScaledImage();
+		this.value=tile.getValue();
+		
+		 tileImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+		    Graphics2D g = tileImage.createGraphics();
+		    drawCommon(g, imageIcon);
+		    g.dispose();
+	 drawImage();
+		
+
+		
+}
+	
+	
 
 	public boolean CanCombine() {
 		return canCombine;
@@ -196,6 +229,14 @@ public abstract class Tile extends JFrame implements TileInterface{
 		Image scaledImg = img.getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
 		return new ImageIcon(scaledImg);
 	}
+	
+//	public void changeTile(Tile before) {
+//		Tile newTile=new Tile(2, before.x, before.y, before.getScaledImage());
+//		if (before.getValue()==4) {
+//			
+//		}
+//		
+//	}
 	
 }
 

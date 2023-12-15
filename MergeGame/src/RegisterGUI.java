@@ -19,6 +19,8 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JTextField;
+
+import java.util.Calendar;
 import java.util.Date;
 
 public class RegisterGUI extends JFrame {
@@ -133,22 +135,33 @@ public class RegisterGUI extends JFrame {
 		registerPane.add(dateField);
 	}
 	
-	 private void checkInput() {
-	        String nameInput = nameField.getText().trim();
-	        String dateInput = dateField.getText().trim();
-	        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
-	        
-	        if (nameInput.isEmpty() || dateInput.isEmpty()) {
-	            throw new IllegalArgumentException("Name and Date cannot be empty.");
-	        }
-//	        try {Date date = dateFormat.parse(dateInput);} catch(ParseException e) {
-//	        	throw new IllegalArgumentException("Invalid date format. Please enter the date in YYYY.MM.DD format.");
-//		        
-//	        }
-	    
-	        	 
-	        
+	private void checkInput() {
+	    String nameInput = nameField.getText().trim();
+	    String dateInput = dateField.getText().trim();
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.mm.dd");
+	    dateFormat.setLenient(false);
 
-	        // Add more validation logic as needed
+	    if (nameInput.isEmpty() || dateInput.isEmpty()) {
+	        throw new IllegalArgumentException("Name and Date cannot be empty.");
 	    }
+
+	    try {
+	        // Check if the date field has a valid date format
+	        Date parsedDate = dateFormat.parse(dateInput);
+
+	        // Check if the year, month, and day are within the specified limits
+	        Calendar cal = Calendar.getInstance();
+	        cal.setTime(parsedDate);
+	        int year = cal.get(Calendar.YEAR);
+	        int month = cal.get(Calendar.MONTH) + 1; // Adding 1 as Calendar.MONTH is zero-based
+	        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+	        if (year < 1000 || year > 9999 || month < 1 || month > 12 || day < 1 || day > 31) {
+	            throw new IllegalArgumentException("Invalid date. Please use 'yyyy.mm.dd' format within valid ranges.");
+	        }
+	    } catch (ParseException e) {
+	        throw new IllegalArgumentException("Invalid date format. Please use 'yyyy.mm.dd' format.");
+	    }
+	    // Add more validation logic as needed
+	}
 }

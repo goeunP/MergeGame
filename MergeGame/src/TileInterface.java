@@ -11,8 +11,6 @@ public interface TileInterface {
 	 void drawImage();
 	 default void drawCommon(Graphics2D g, ImageIcon imageIcon) {
 	        Image img = imageIcon.getImage();
-	        
-	        // 변환된 Image를 그래픽스에 그림
 	        g.setColor(new Color(0, 0, 0, 0));
 	        g.fillRect(0, 0, WIDTH, HEIGHT);
 	        g.drawImage(img, 0, 0, null);

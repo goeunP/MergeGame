@@ -90,9 +90,6 @@ public class MainGUI extends JFrame {
 	        Image resizedTitleImg = originalTitleImg.getScaledInstance(titleSize.width, titleSize.height, Image.SCALE_SMOOTH);
 	        ImageIcon resizedTitleImgIcon = new ImageIcon(resizedTitleImg);
 	        title.setIcon(resizedTitleImgIcon);
-//	        
-//		ImageIcon titleImg = new ImageIcon(new ImageIcon(MainGUI.class.getResource("/image/titleImg.png")).getImage().getScaledInstance(titleSize.width, titleSize.height, Image.SCALE_SMOOTH));
-//	    title.setIcon(new ImageIcon(MainGUI.class.getResource("/image/titleImg.png")));
 		GridBagConstraints gbc_title = new GridBagConstraints();
 		gbc_title.insets = new Insets(0, 0, 5, 5);
 		gbc_title.gridx = 1;
@@ -126,8 +123,8 @@ public class MainGUI extends JFrame {
 		rankingBtn.addActionListener(new ActionListener() {
 			 @Override
 			    public void actionPerformed(ActionEvent e) {
-			        RankGUI frame4 = new RankGUI();
-			        setVisible(false); // 창 안보이게 하기 
+			        ScoreGUI frame4 = new ScoreGUI();
+			        setVisible(false);  
 					frame4.setVisible(true);
 			    }
 		});
