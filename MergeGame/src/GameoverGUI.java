@@ -5,14 +5,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import javax.swing.JScrollPane;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.FlowLayout;
 
 
 public class GameoverGUI extends JFrame {
@@ -21,9 +23,11 @@ public class GameoverGUI extends JFrame {
 	private JPanel contentPane;
 	private JPanel rankPane;
 	ImageIcon backgroundImg;
-	private JLabel lblNewLabel;
 	private JPanel rankingTitlePane;
 	private JLabel rankingTitle;
+	private JButton tryAgainBtn;
+	private JButton btnScoreBoard;
+	private JLabel lblOver;
 
 
 
@@ -58,17 +62,49 @@ public class GameoverGUI extends JFrame {
 		
 		rankingTitlePane = new JPanel();
 		rankingTitlePane.setBackground(Color.WHITE);
-		rankingTitlePane.setBounds(45, 24, 222, 55);
+		rankingTitlePane.setBounds(48, 66, 226, 134);
 		rankPane.add(rankingTitlePane);
-		rankingTitlePane.setLayout(new BorderLayout(0, 0));
+		rankingTitlePane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		rankingTitle = new JLabel("Ranking");
-		rankingTitle.setFont(new Font(".AppleSystemUIFont", Font.BOLD, 35));
+		rankingTitle = new JLabel("GAME");
+		rankingTitle.setFont(new Font(".AppleSystemUIFont", Font.BOLD, 46));
 		rankingTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		rankingTitlePane.add(rankingTitle);
 		
-		lblNewLabel = new JLabel("New label");
-		//rankPane.setViewportView(lblNewLabel);
+		lblOver = new JLabel("OVER");
+		lblOver.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOver.setFont(new Font(".AppleSystemUIFont", Font.BOLD, 46));
+		rankingTitlePane.add(lblOver);
+		
+		tryAgainBtn = new JButton("Try Again");
+		tryAgainBtn.setFont(new Font(".AppleSystemUIFont", Font.BOLD, 20));
+		tryAgainBtn.setBounds(77, 283, 172, 50);
+		rankPane.add(tryAgainBtn);
+		tryAgainBtn.addActionListener(new ActionListener() {
+			 @Override
+			    public void actionPerformed(ActionEvent e) {
+//			       
+				   Start frame3 = new Start();
+                 setVisible(false); 
+                 frame3.setVisible(true);
+			    }
+		});
+		
+		btnScoreBoard = new JButton("Score Board");
+		btnScoreBoard.setFont(new Font(".AppleSystemUIFont", Font.BOLD, 20));
+		btnScoreBoard.setBounds(77, 366, 172, 50);
+		rankPane.add(btnScoreBoard);
+		btnScoreBoard.addActionListener(new ActionListener() {
+			 @Override
+			    public void actionPerformed(ActionEvent e) {
+//			       
+				   ScoreGUI frame3 = new ScoreGUI();
+                setVisible(false); 
+                frame3.setVisible(true);
+			    }
+		});
+		
+		new JLabel("New label");
 	
 		
 	}

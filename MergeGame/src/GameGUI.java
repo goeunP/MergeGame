@@ -5,28 +5,25 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.Writer;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
-public class GameGUI {
+public class GameGUI extends JFrame {
+	private static final long serialVersionUID = 1L;
 	public static final int ROWS = 3;
 	public static final int COLS = 3;
 	private final int startingTiles = 2;
 	private Tile[][] board;
 	private boolean dead;
-	private boolean won;
 	private BufferedImage gameBoard;
 	private BufferedImage finalBoard;
-	private int x;
-	private int y;
 	private int score = 0;
-	private int highScore= 0;
+	//private int highScore= 0;
 	private Font scoreFont;
 	private Font Font;
 	
@@ -34,21 +31,12 @@ public class GameGUI {
 	public static int BOARD_WIDTH = (COLS+1) * SPACING + COLS * Tile.WIDTH;
 	public static int BOARD_HEIGHT = (ROWS+1) * SPACING + ROWS * Tile.HEIGHT;
 	
-	private long elapsedMS;
-	private long fastestMS;
-	private long startTime;
+
 	private boolean hasStarted;
-//	private String formattedTime = "00:00:000";
-	//saving
+
 	private String saveDataPath;
 	private String fileName = "SaveData";
 	
-//	/**
-//	 * @wbp.parser.entryPoint
-//	 */
-	/**
-	 * @wbp.parser.entryPoint
-	 */
 	public GameGUI(int x, int y) {
 		try {
 			saveDataPath = GameGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
@@ -58,11 +46,8 @@ public class GameGUI {
 			e.printStackTrace();
 			
 		}
-		ImageIcon backgroundImg= new ImageIcon(Toolkit.getDefaultToolkit().getImage(MainGUI.class.getResource("/image/background.jpeg")));
 		scoreFont = Game.main.deriveFont(42f);
 		Font = Game.main.deriveFont(36f);
-		this.x=x;
-		this.y=y;
 		board = new Tile[ROWS][COLS];
 		gameBoard = new BufferedImage(300, 300, BufferedImage.TYPE_INT_RGB);
 		finalBoard = new BufferedImage(300, 300, BufferedImage.TYPE_INT_RGB);
@@ -73,64 +58,11 @@ public class GameGUI {
 		createBoardImage();
 		start();
 	}
-	private void createSaveData() {
-		try {
-			File file = new File(saveDataPath, fileName);
-			FileWriter output = new FileWriter(file);
-			BufferedWriter writer = new BufferedWriter(output);
-			writer.write("" + 0);
-			writer.newLine();
-			writer.write("" + Integer.MAX_VALUE);
-			writer.close();
-		}
-		catch(Exception e ) {
-			e.printStackTrace();
-		}
-	}
-//	private void loadHighScore() {	
-//		try {
-//			File f = new File(saveDataPath, fileName);
-//			if(!f.isFile()) {
-//				createSaveData();
-//			}
-//			BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(f)));
-//			highScore = Integer.parseInt(reader.readLine());
-//			fastestMS = Long.parseLong(reader.readLine());
-//			reader.close();
-//			
-//		}
-//		catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-//	private void setHighScore() {
-//		FileWriter output = null;
-//		
-//		try {
-//			File f = new File(saveDataPath, fileName);
-//			output = new FileWriter(f);
-//			BufferedWriter writer = new BufferedWriter(output);
-//			
-//		
-//				writer.write("" + highScore);
-//			writer.newLine();
-//			if(elapsedMS <= fastestMS && won) {
-//				writer.write("" + elapsedMS);
-//			}
-//			else {
-//				writer.write("" + fastestMS);
-//			}
-//			writer.close();
-//		}
-//		catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//	}
+	
 	private void createBoardImage() {
 		Graphics2D g = (Graphics2D) gameBoard.getGraphics();
 		g.setColor(Color.white);
-		//g.fillRect(0,0,BOARD_WIDTH,BOARD_HEIGHT);
+		
 		g.setColor(Color.white); 
 		
 		for (int row=0; row<ROWS; row++) {
@@ -147,14 +79,9 @@ public class GameGUI {
 		for(int i =0; i<startingTiles; i++) {
 			spawnRandom();
 		}
-		/*spawn(0,0,2);
-		spawn(0,1,2);
-		spawn(0,2,2);
-		spawn(0,3,2);*/
+		
 	}
-	/*private void spawn(int row, int col, int value) {
-		board[row][col] = new Tile(value, getTileX(col),getTileY(row));
-	}*/
+	
 	private void spawnRandom() {
 		Random random = new Random();
 		
@@ -168,23 +95,10 @@ public class GameGUI {
 			
 			
 			if(current == null) {
-//				int value = random.nextInt(10) < 9 ? 2 : 4;
+
 				int[] valueSet = {2, 4};
 			    int randomIndex = new Random().nextInt(2);
 			    int value = valueSet[randomIndex];
-//				if(value==4) {
-//					tile=new AppleTile(getTileX(col), getTileY(row));
-//				}else if(value==8) {
-//					tile=new KiwiTile(getTileX(col), getTileY(row));
-//				}else if(value==16) {
-//					tile=new OrangeTile(getTileX(col), getTileY(row));
-//				}else if(value==32) {
-//					tile=new GrapeTile(getTileX(col), getTileY(row));
-//				}else if(value==64) {
-//					tile=new WatermelonTile(getTileX(col), getTileY(row));
-//				}else if(value==128) {
-//					tile=new BasketTile(getTileX(col), getTileY(row));
-//				};
 				  switch (value) {
 		            case 2:
 		                tile = new StrawberryTile(getTileX(col), getTileY(row));
@@ -192,21 +106,7 @@ public class GameGUI {
 		            case 4:
 		                tile = new AppleTile(getTileX(col), getTileY(row));
 		                break;
-//		            case 8:
-//		                tile = new KiwiTile(getTileX(col), getTileY(row));
-//		                break;
-//		            case 16:
-//		                tile = new OrangeTile(getTileX(col), getTileY(row));
-//		                break;
-//		            case 32:
-//		                tile = new GrapeTile(getTileX(col), getTileY(row));
-//		                break;
-//		            case 64:
-//		                tile = new WatermelonTile(getTileX(col), getTileY(row));
-//		                break;
-//		            case 128:
-//		                tile = new BasketTile(getTileX(col), getTileY(row));
-//		                break;
+
 		            default:
 		                tile = new StrawberryTile(getTileX(col), getTileY(row));
 		                break;
@@ -252,22 +152,22 @@ public class GameGUI {
 	}
 	
 	public void update() {
-		if(!won && !dead) {
-			if(hasStarted) {
-				elapsedMS = (System.nanoTime() - startTime) / 1000000;
-				//formattedTime = formatTime(elapsedMS);
-			}
-			else {
-				startTime = System.nanoTime();
-			}
-		}
+//		if(!won && !dead) {
+//			if(hasStarted) {
+//			//	elapsedMS = (System.nanoTime() - startTime) / 1000000;
+//				//formattedTime = formatTime(elapsedMS);
+//			}
+//			else {
+//				startTime = System.nanoTime();
+//			}
+//		}
 		
 		
 		checkKeys();
-		if(score >= highScore) {
-			highScore = score;
-			
-		}
+//		if(score >= highScore) {
+//			highScore = score;
+//			
+//		}
 		
 		for(int row = 0; row <ROWS; row++) {
 			for (int col =0; col<COLS; col++) {
@@ -276,71 +176,11 @@ public class GameGUI {
 				current.update();
 				resetPosition(current, row, col);
 				if(current.getValue()==2048) {
-					won = true;
 				}
 			}
 		}
 	}
-//	private String formatTime(long millis) {
-//		String formattedTime;
-//		String hourFormat ="";
-//		int hours = (int)(millis/3600000);
-//		if(hours >=1) {
-//			millis -= hours * 3600000;
-//		if(hours < 10) {
-//			hourFormat = "0" + hours;
-//		}
-//		else {
-//			hourFormat = ""+hours;
-//		}
-//		hourFormat += ":";
-//		}
-//		
-//		
-//		String minuteFormat;
-//		int minutes = (int)(millis/60000);
-//		if(minutes >=1) {
-//			millis -=minutes*60000;
-//			if(minutes < 10) {
-//				minuteFormat = "0" + minutes;
-//			}
-//			else {
-//				minuteFormat = ""+ minutes;
-//			}
-//		}
-//		else {
-//			minuteFormat = "00";
-//			
-//		}
-//		String secondFormat;
-//		int seconds = (int)(millis/1000);
-//		if(seconds >=1) {
-//			millis -=seconds*1000;
-//			if(seconds < 10) {
-//				secondFormat = "0" + seconds;
-//			}
-//			else {
-//				secondFormat = ""+ seconds;
-//			}
-//		}
-//		else {
-//			secondFormat = "00";
-//			
-//		}
-//		
-//		String milliFormat;
-//		if(millis >99) {
-//			milliFormat = "" + millis;
-//		}
-//		else if (millis >9) {
-//			milliFormat = "0" + millis;
-//		}
-//		else {
-//			milliFormat = "00" + millis;
-//		}
-//		formattedTime = hourFormat + minuteFormat + ":" + secondFormat + ":" + milliFormat;
-//		return formattedTime;
-//	}
+
 	private void resetPosition(Tile current, int row, int col) {
 		if (current == null) return;
 		int x = getTileX(col);
@@ -395,6 +235,7 @@ public class GameGUI {
 				board[newRow][newCol].setSlideTo(new Point(newRow, newCol));
 				board[newRow][newCol].setCombineAnimation(true);
 				score += board[newRow][newCol].getValue();
+				
 			}
 			else {
 				move =false;
@@ -493,20 +334,24 @@ public class GameGUI {
 			for(int col =0; col<COLS; col++) {
 				if(board[row][col] == null) return;
 				if(checkSurroundingTils(row, col,board[row][col])) {
+					closeWindow();
 					return;
 			}
 			
 			}
 		}
-		dead = true;
-//		if(score >=highScore) highScore = score;
-//		setHighScore();
+		 dead = true;
+		    System.out.println("game over");
+		    GameoverGUI frame = new GameoverGUI();
+		    frame.setVisible(true);
+		    saveScore();
 }
 	private boolean checkSurroundingTils(int row, int col, Tile current) {
 		if(row >0) {
 			Tile check = board[row -1 ][col];
 			if(check == null) return true;
-			if(current.getValue() == check.getValue()) return true;
+			if(current.getValue() == check.getValue()) 
+				return true;
 		}
 		if(row<ROWS-1) {
 			Tile check = board[row+1][col];
@@ -547,4 +392,32 @@ public class GameGUI {
 		}
 		
 	}
+	
+	  public boolean getDead() {
+	        return dead;
+	    }
+	  public void closeWindow() {
+	        this.dispose();
+	    }
+	  private void saveScoreToFile(int score) {
+		    String fileName = "score.txt"; // 파일명 설정
+
+		    try {
+		        FileWriter fileWriter = new FileWriter(fileName);
+		        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+		        // "score: " + score 형식으로 파일에 쓰기
+		        bufferedWriter.write("score: " + score);
+
+		        bufferedWriter.close(); // 파일 닫기
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
+	    
+	    private void saveScore() {
+	        saveScoreToFile(score);
+	    }
+	    
+
 }

@@ -3,8 +3,8 @@ import java.awt.Graphics2D;
 public class AppleTile extends Tile {
 
     
-    public AppleTile(int x, int y) {
-        //	super(2, 1, 1);
+    private static final long serialVersionUID = 1L;
+	public AppleTile(int x, int y) {
             super(4, x, y ,"/image/apple.png");
       }
     @Override

@@ -11,27 +11,19 @@ public class Game extends JPanel implements KeyListener, Runnable {
 
 	
 	private static final long serialVersionUID = 1L;
-	//width of the screen
 	public static final int WIDTH = 328;
-	//Height of the screen
 	public static final int HEIGHT = 501;
-	//FONT 
-	public static final Font main = new Font("Bebas Neue Regular", Font.PLAIN,28);
+	public static final Font main = new Font(".AppleSystemUIFont", Font.PLAIN,28);
 	private Thread game;
 	private boolean running;
 	private BufferedImage Image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 	private GameGUI board;
 	
-	private long StartTime;
-	private long elapsed;
-	private boolean set;
 	ImageIcon backgroundImg= new ImageIcon(Toolkit.getDefaultToolkit().getImage(MainGUI.class.getResource("/image/background.jpeg")));
 
 	
 	public Game() {
-		//allows key inputs
 		setFocusable(true);
-		//this will determine how big the frame is
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		addKeyListener(this);
 		board = new GameGUI(WIDTH/2 - GameGUI.BOARD_WIDTH/2, HEIGHT - GameGUI.BOARD_HEIGHT - 10);
@@ -44,13 +36,11 @@ public class Game extends JPanel implements KeyListener, Runnable {
 	
 	private void render() {
 		Graphics2D g = (Graphics2D) Image.getGraphics();
-		//g.setColor(Color.white);
-		//g.fillRect(0, 0, WIDTH, HEIGHT);
 		   Dimension d = getSize();
            g.drawImage(backgroundImg.getImage(), 0, 0, d.width, d.height, null);
        
            setOpaque(false); 
-//           super.paintComponent(g);
+
 		board.render(g);
 		g.dispose();
 		
@@ -60,49 +50,15 @@ public class Game extends JPanel implements KeyListener, Runnable {
 	}
 	
 	public void run() {
-		int fps = 0, updates =0;
-		long fpsTimer = System.currentTimeMillis();
-		double nsPerUpdate = 100000000.0/60;
-		
-		//last update time in nanoseconds
-		double then = System.nanoTime();
-		double unprocessed = 0;
-		//update queue
-		while(running) {
-
-			boolean shouldRender = false;
-			double now = System.nanoTime();
-			unprocessed += ( now - then ) / nsPerUpdate;
-			then = now;
-		while(unprocessed >= 1) {
-			updates++;
-			update();
-			unprocessed--;
-			shouldRender = true;
-		}
-		//render
-		if(shouldRender) {
-			fps++;
-			render();
-			shouldRender = false;
-		}
-		//for pausing the thread
-		else {
-			try {
-				Thread.sleep(1);
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-		}
-		}
-		//FPS Timer
-		if(System.currentTimeMillis() - fpsTimer>1000) {
-			//System.out.printf("%d fps %d updates", fps, updates);
-			//System.out.println();
-			fps =0;
-			updates =0;
-			fpsTimer +=1000;
-		}		
+	    while (running) {
+	        update();
+	        render();
+	        try {
+	            Thread.sleep(1);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 	public synchronized void start() {
 		if(running) return;
@@ -119,6 +75,8 @@ public class Game extends JPanel implements KeyListener, Runnable {
 	
 	public void keyPressed(KeyEvent e) {
 		Keyboard.keyPressed(e);
+		
+		
 	}
 	public void keyReleased(KeyEvent e) {
 		Keyboard.keyReleased(e);
@@ -126,5 +84,9 @@ public class Game extends JPanel implements KeyListener, Runnable {
 	public void keyTyped(KeyEvent e) {
 		
 	}
+	
+	 public boolean getGUIDead() {
+	        return board.getDead();
+	   }
 	
 }

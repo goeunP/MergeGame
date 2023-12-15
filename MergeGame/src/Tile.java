@@ -167,7 +167,7 @@ public abstract class Tile extends JFrame implements TileInterface{
 	    }else if(value==128){
 	    	 tile = new BasketTile(x, y);
 	    }
-		System.out.println(tile.getScaledImage());
+		
 		this.imageIcon = tile.getScaledImage();
 		this.value=tile.getValue();
 		
@@ -175,7 +175,7 @@ public abstract class Tile extends JFrame implements TileInterface{
 		    Graphics2D g = tileImage.createGraphics();
 		    drawCommon(g, imageIcon);
 		    g.dispose();
-	 drawImage();
+		    drawImage();
 		
 
 		
@@ -229,18 +229,4 @@ public abstract class Tile extends JFrame implements TileInterface{
 		Image scaledImg = img.getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
 		return new ImageIcon(scaledImg);
 	}
-	
-//	public void changeTile(Tile before) {
-//		Tile newTile=new Tile(2, before.x, before.y, before.getScaledImage());
-//		if (before.getValue()==4) {
-//			
-//		}
-//		
-//	}
-	
 }
-
-
-
-
-

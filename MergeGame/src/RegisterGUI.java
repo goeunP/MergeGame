@@ -40,9 +40,6 @@ public class RegisterGUI extends JFrame {
 	private JLabel dateLabel;
 
 
-	/**
-	 * exception 처리 !!!!!!!!!!!!!!!!
-	 */
 	public RegisterGUI() {
 		setTitle("Register");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,7 +101,7 @@ public class RegisterGUI extends JFrame {
                     Start frame3 = new Start();
 //                    frame3.start();
                     setVisible(false); // 창 안보이게 하기
-                    frame3.setVisible(true);
+                    frame3.setVisible(true);       
                 } catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(RegisterGUI.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }

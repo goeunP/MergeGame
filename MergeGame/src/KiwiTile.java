@@ -2,8 +2,8 @@ import java.awt.Graphics2D;
 
 public class KiwiTile extends Tile {
    
-    public KiwiTile(int x, int y) {
-        //	super(2, 1, 1);
+    private static final long serialVersionUID = 1L;
+	public KiwiTile(int x, int y) {
             super(8, x, y ,"/image/kiwi.png");
         }
     @Override
