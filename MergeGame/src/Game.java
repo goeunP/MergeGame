@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Game extends JPanel implements KeyListener, Runnable {
@@ -10,9 +12,9 @@ public class Game extends JPanel implements KeyListener, Runnable {
 	
 	private static final long serialVersionUID = 1L;
 	//width of the screen
-	public static final int WIDTH = 415;
+	public static final int WIDTH = 328;
 	//Height of the screen
-	public static final int HEIGHT = 530;
+	public static final int HEIGHT = 501;
 	//FONT 
 	public static final Font main = new Font("Bebas Neue Regular", Font.PLAIN,28);
 	private Thread game;
@@ -23,7 +25,8 @@ public class Game extends JPanel implements KeyListener, Runnable {
 	private long StartTime;
 	private long elapsed;
 	private boolean set;
-	
+	ImageIcon backgroundImg= new ImageIcon(Toolkit.getDefaultToolkit().getImage(MainGUI.class.getResource("/image/background.jpeg")));
+
 	
 	public Game() {
 		//allows key inputs
@@ -32,7 +35,6 @@ public class Game extends JPanel implements KeyListener, Runnable {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		addKeyListener(this);
 		board = new GameGUI(WIDTH/2 - GameGUI.BOARD_WIDTH/2, HEIGHT - GameGUI.BOARD_HEIGHT - 10);
-		
 	}
 	
 	private void update() {
@@ -42,8 +44,13 @@ public class Game extends JPanel implements KeyListener, Runnable {
 	
 	private void render() {
 		Graphics2D g = (Graphics2D) Image.getGraphics();
-		g.setColor(Color.white);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+		//g.setColor(Color.white);
+		//g.fillRect(0, 0, WIDTH, HEIGHT);
+		   Dimension d = getSize();
+           g.drawImage(backgroundImg.getImage(), 0, 0, d.width, d.height, null);
+       
+           setOpaque(false); 
+//           super.paintComponent(g);
 		board.render(g);
 		g.dispose();
 		
@@ -90,8 +97,8 @@ public class Game extends JPanel implements KeyListener, Runnable {
 		}
 		//FPS Timer
 		if(System.currentTimeMillis() - fpsTimer>1000) {
-			System.out.printf("%d fps %d updates", fps, updates);
-			System.out.println();
+			//System.out.printf("%d fps %d updates", fps, updates);
+			//System.out.println();
 			fps =0;
 			updates =0;
 			fpsTimer +=1000;

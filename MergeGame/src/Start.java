@@ -9,7 +9,6 @@ public class Start extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-
         game.start();
     }
 }
