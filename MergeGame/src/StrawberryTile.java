@@ -4,6 +4,8 @@ public class StrawberryTile extends Tile {
 
     private static final long serialVersionUID = 1L;
 
+    // this tile contains value 2 and this will be used for score
+    // it draws strawberry image in the tile
 	public StrawberryTile(int x, int y) {
             super(2, x, y ,"/image/strawberry.png");
         }

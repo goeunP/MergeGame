@@ -123,7 +123,7 @@ public class MainGUI extends JFrame {
 		rankingBtn.addActionListener(new ActionListener() {
 			 @Override
 			    public void actionPerformed(ActionEvent e) {
-			        ScoreGUI frame4 = new ScoreGUI();
+			        RankGUI frame4 = new RankGUI();
 			        setVisible(false);  
 					frame4.setVisible(true);
 			    }

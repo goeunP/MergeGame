@@ -1,8 +1,6 @@
 
 import java.awt.Graphics;
 import java.awt.Image;
-
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,13 +8,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
-import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -32,7 +26,6 @@ public class ScoreGUI extends JFrame {
 	private JPanel contentPane;
 	private JPanel titlePane;
 	ImageIcon backgroundImg;
-	private JLabel lblNewLabel;
 	private JPanel rankingTitlePane;
 	private JLabel rankingTitle;
 	private JPanel scorePanel;
@@ -87,13 +80,9 @@ public class ScoreGUI extends JFrame {
 		scorePanel.setBounds(22, 91, 272, 352);
 		titlePane.add(scorePanel);
 		scorePanel.setLayout(null);
-		
-		//rankPane.setViewportView(lblNewLabel);
-		//loadScore();
-
 
 		JLabel imgLabel = new JLabel();
-        imgLabel.setBounds(137, 189, 117, 141); // 이미지의 위치와 크기 설정
+        imgLabel.setBounds(137, 189, 117, 141); 
 
         ImageIcon icon = new ImageIcon(
             ScoreGUI.class.getResource("/image/farmer.png")
@@ -103,7 +92,7 @@ public class ScoreGUI extends JFrame {
         Image updateImg = img.getScaledInstance(250, 210, Image.SCALE_SMOOTH);
         ImageIcon updateIcon = new ImageIcon(updateImg);
 
-        imgLabel.setIcon(updateIcon); // 오류를 수정하기 위해 이 부분을 아래로 이동합니다.
+        imgLabel.setIcon(updateIcon); 
 
         scorePanel.add(imgLabel);
         imgLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -133,8 +122,7 @@ public class ScoreGUI extends JFrame {
 
 		btnTryAgain.addActionListener(new ActionListener() {
 			 @Override
-			    public void actionPerformed(ActionEvent e) {
-//			       
+			    public void actionPerformed(ActionEvent e) {			       
 				   Start frame3 = new Start();
                  setVisible(false); 
                  frame3.setVisible(true);
@@ -146,34 +134,24 @@ public class ScoreGUI extends JFrame {
 	}
 	
 	private int readScoreFromFile() {
-        String fileName = "./score.txt"; // 파일명 설정
-        
-
+        String fileName = "./score.txt"; 
         try {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            // 파일에서 한 줄을 읽어옴 (score: 숫자)
-            String line = bufferedReader.readLine();
-
-            // "score: " 이후의 숫자 부분을 추출하여 int로 변환
-            if (line != null && line.startsWith("score: ")) {
-                String scoreString = line.substring(7); // "score: " 이후 문자열 추출
-                score = Integer.parseInt(scoreString); // 문자열을 int로 변환하여 저장
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                try {
+                    score = Integer.parseInt(line);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
             }
-
-            bufferedReader.close(); // 파일 닫기
+            bufferedReader.close(); 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return score;
-    }
-	
-	private int loadScore() {
-        int loadedScore = readScoreFromFile();
-        // 읽어온 점수를 변수에 저장
-        return loadedScore;
     }
 
 }

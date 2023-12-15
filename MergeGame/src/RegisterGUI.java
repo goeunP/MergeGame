@@ -1,6 +1,4 @@
-import java.awt.EventQueue;
 import java.awt.Graphics;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,10 +17,8 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.JTextField;
-
 import java.util.Calendar;
 import java.util.Date;
-
 public class RegisterGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -143,14 +139,12 @@ public class RegisterGUI extends JFrame {
 	    }
 
 	    try {
-	        // Check if the date field has a valid date format
 	        Date parsedDate = dateFormat.parse(dateInput);
 
-	        // Check if the year, month, and day are within the specified limits
 	        Calendar cal = Calendar.getInstance();
 	        cal.setTime(parsedDate);
 	        int year = cal.get(Calendar.YEAR);
-	        int month = cal.get(Calendar.MONTH) + 1; // Adding 1 as Calendar.MONTH is zero-based
+	        int month = cal.get(Calendar.MONTH) + 1; 
 	        int day = cal.get(Calendar.DAY_OF_MONTH);
 
 	        if (year < 1000 || year > 9999 || month < 1 || month > 12 || day < 1 || day > 31) {
@@ -159,6 +153,7 @@ public class RegisterGUI extends JFrame {
 	    } catch (ParseException e) {
 	        throw new IllegalArgumentException("Invalid date format. Please use 'yyyy.mm.dd' format.");
 	    }
-	    // Add more validation logic as needed
 	}
+	
+	 
 }

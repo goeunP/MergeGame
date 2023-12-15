@@ -49,17 +49,20 @@ public class Game extends JPanel implements KeyListener, Runnable {
 		g.dispose();
 	}
 	
-	public void run() {
-	    while (running) {
-	        update();
-	        render();
-	        try {
-	            Thread.sleep(1);
-	        } catch (Exception e) {
-	            e.printStackTrace();
+	 public void run() {
+	        while (running && !Thread.interrupted()) {
+	            update();
+	            render();
+	            try {
+	                Thread.sleep(1);
+	            } catch (InterruptedException e) {
+	                // InterruptedException이 발생하면 인터럽트 상태가 설정됨
+	                // 해당 경우에는 스레드 종료
+	                System.out.println("Thread interrupted. Exiting...");
+	                return;
+	            }
 	        }
 	    }
-	}
 	public synchronized void start() {
 		if(running) return;
 		running = true;

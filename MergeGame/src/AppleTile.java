@@ -2,8 +2,10 @@ import java.awt.Graphics2D;
 
 public class AppleTile extends Tile {
 
-    
     private static final long serialVersionUID = 1L;
+    
+    // this tile contains value 4 and this will be used for score
+    // it draws apple image in the tile
 	public AppleTile(int x, int y) {
             super(4, x, y ,"/image/apple.png");
       }

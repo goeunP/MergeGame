@@ -44,7 +44,6 @@
 
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.AffineTransform;
@@ -57,34 +56,36 @@ import javax.swing.ImageIcon;
 
 public abstract class Tile extends JFrame implements TileInterface{
 
+	private static final long serialVersionUID = 1L;
 	public static final int WIDTH =92;
 	public static final int	HEIGHT =92;
 	public static final int SLIDE_SPEED = 20;
 	public static final int ARC_WIDTH = 15;
 	public static final int ARC_HEIGHT = 15;
 	
+	// Tile properties
 	private int value;
 	protected BufferedImage tileImage;
-	private Color background;
-	private Color text;
-	private Font font;
 	private Point slideTo;
 	private int x;
 	private int y;
 	protected ImageIcon imageIcon;
 	
+	
+	// Beginning animation properties
 	private boolean beginningAnimation = true;
 	private double scaleFirst = 0.1;
 	private BufferedImage beginningImage;
 	
+	
+	// Combine animation properties
 	private boolean combineAnimation = false;
 	private double scaleCombine = 1.5;
 	private BufferedImage combineImage;
 	private boolean canCombine = true;
-	
-	
-	// "/image/strawberry.png"
-	
+
+
+	// Constructor
 	public Tile(int value, int x, int y, String imagePath) {
 		this.value = value;
 		this.x=x;
@@ -95,11 +96,9 @@ public abstract class Tile extends JFrame implements TileInterface{
 		beginningImage = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		combineImage = new BufferedImage(WIDTH*2, HEIGHT*2, BufferedImage.TYPE_INT_ARGB);
 		drawImage();
-		//System.out.println(tileImage);	
+		
 	}
-	
-	//public abstract void drawImage();
-	
+	// Update method for animations
 	public void update() {
 		if(beginningAnimation) {
 			AffineTransform transform = new AffineTransform();
@@ -130,6 +129,9 @@ public abstract class Tile extends JFrame implements TileInterface{
 			
 		}
 	}
+	
+
+    // Render method to draw the tile on the screen
 	public void render(Graphics2D g) {
 		if(beginningAnimation) {
 			g.drawImage(beginningImage, x, y, null);
@@ -141,15 +143,14 @@ public abstract class Tile extends JFrame implements TileInterface{
 		else {
 		g.drawImage(tileImage, x, y, null); }
 	}
-		
+	
+	 // Getter and Setter methods for Tile properties
 	public int getValue() {
 		return value;
 	}
 	
-
-
+	// Make new tile according to the value of combined tile
 	public void setValue (int value, int x, int y) {
-		//this.imageIcon=null;
 		Tile tile=new StrawberryTile(x, y);
 		if (value == 4) {
 			 tile = new AppleTile(x, y);
@@ -176,13 +177,8 @@ public abstract class Tile extends JFrame implements TileInterface{
 		    drawCommon(g, imageIcon);
 		    g.dispose();
 		    drawImage();
-		
-
-		
 }
 	
-	
-
 	public boolean CanCombine() {
 		return canCombine;
 	}
@@ -224,6 +220,7 @@ public abstract class Tile extends JFrame implements TileInterface{
 		if(combineAnimation) scaleCombine = 1.2;
 	}
 	
+	// make image size fit the tile
 	public ImageIcon getScaledImage() {
 		Image img = imageIcon.getImage();
 		Image scaledImg = img.getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);

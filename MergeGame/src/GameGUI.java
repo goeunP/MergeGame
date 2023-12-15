@@ -1,16 +1,12 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.util.Random;
-
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class GameGUI extends JFrame {
@@ -23,7 +19,6 @@ public class GameGUI extends JFrame {
 	private BufferedImage gameBoard;
 	private BufferedImage finalBoard;
 	private int score = 0;
-	//private int highScore= 0;
 	private Font scoreFont;
 	private Font Font;
 	
@@ -34,27 +29,14 @@ public class GameGUI extends JFrame {
 
 	private boolean hasStarted;
 
-	private String saveDataPath;
-	private String fileName = "SaveData";
 	
 	public GameGUI(int x, int y) {
-		try {
-			saveDataPath = GameGUI.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-			//saveDataPath = System.getProperty("user.home")+ "\\foldername";
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			
-		}
+		
 		scoreFont = Game.main.deriveFont(42f);
 		Font = Game.main.deriveFont(36f);
 		board = new Tile[ROWS][COLS];
 		gameBoard = new BufferedImage(300, 300, BufferedImage.TYPE_INT_RGB);
 		finalBoard = new BufferedImage(300, 300, BufferedImage.TYPE_INT_RGB);
-		//startTime = System.nanoTime();
-		
-		
-		//loadHighScore();
 		createBoardImage();
 		start();
 	}
@@ -69,8 +51,7 @@ public class GameGUI extends JFrame {
 			for(int col =0; col<COLS; col++) {
 				int x = SPACING + SPACING * col + Tile.WIDTH * col;
 				int y = SPACING + SPACING * row + Tile.HEIGHT * row;
-				g.fillRoundRect(x, y, Tile.WIDTH, Tile.HEIGHT, Tile.ARC_WIDTH, Tile.ARC_HEIGHT);
-			
+				g.fillRoundRect(x, y, Tile.WIDTH, Tile.HEIGHT, Tile.ARC_WIDTH, Tile.ARC_HEIGHT);			
 			}
 		}
 		
@@ -79,7 +60,6 @@ public class GameGUI extends JFrame {
 		for(int i =0; i<startingTiles; i++) {
 			spawnRandom();
 		}
-		
 	}
 	
 	private void spawnRandom() {
@@ -152,22 +132,7 @@ public class GameGUI extends JFrame {
 	}
 	
 	public void update() {
-//		if(!won && !dead) {
-//			if(hasStarted) {
-//			//	elapsedMS = (System.nanoTime() - startTime) / 1000000;
-//				//formattedTime = formatTime(elapsedMS);
-//			}
-//			else {
-//				startTime = System.nanoTime();
-//			}
-//		}
-		
-		
 		checkKeys();
-//		if(score >= highScore) {
-//			highScore = score;
-//			
-//		}
 		
 		for(int row = 0; row <ROWS; row++) {
 			for (int col =0; col<COLS; col++) {
@@ -229,7 +194,6 @@ public class GameGUI extends JFrame {
 			else if (board[newRow][newCol].getValue()==current.getValue() && board[newRow][newCol].CanCombine()) {
 				board[newRow][newCol].setCanCombine(false);
 				board[newRow][newCol].setValue(board[newRow][newCol].getValue()*2, newRow, newCol);
-				//System.out.println(board[newRow][newCol].getValue());
 				canMove = true;
 				board[newRow - verticalDirection][newCol - horizontalDirection] = null;
 				board[newRow][newCol].setSlideTo(new Point(newRow, newCol));
@@ -341,10 +305,12 @@ public class GameGUI extends JFrame {
 			}
 		}
 		 dead = true;
+		
 		    System.out.println("game over");
 		    GameoverGUI frame = new GameoverGUI();
 		    frame.setVisible(true);
 		    saveScore();
+		    Thread.currentThread().interrupt();
 }
 	private boolean checkSurroundingTils(int row, int col, Tile current) {
 		if(row >0) {
@@ -403,11 +369,11 @@ public class GameGUI extends JFrame {
 		    String fileName = "score.txt"; // 파일명 설정
 
 		    try {
-		        FileWriter fileWriter = new FileWriter(fileName);
+		        FileWriter fileWriter = new FileWriter(fileName, true);
 		        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
 		        // "score: " + score 형식으로 파일에 쓰기
-		        bufferedWriter.write("score: " + score);
+		        bufferedWriter.write(score+"\n");
 
 		        bufferedWriter.close(); // 파일 닫기
 		    } catch (IOException e) {
@@ -415,9 +381,9 @@ public class GameGUI extends JFrame {
 		    }
 		}
 	    
-	    private void saveScore() {
-	        saveScoreToFile(score);
-	    }
+	  private void saveScore() {
+	       saveScoreToFile(score);
+	   }
 	    
 
 }

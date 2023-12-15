@@ -1,8 +1,13 @@
 import java.awt.Graphics2D;
 
 public class OrangeTile extends Tile {
+	
+	 private static final long serialVersionUID = 1L;
+
+	// this tile contains value 16 and this will be used for score
+    // it draws orange image in the tile
     public OrangeTile(int x, int y) {
-    //	super(2, 1, 1);
+
         super(16, x, y ,"/image/orange.png");
     }
 
